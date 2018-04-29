@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { Component } from "react";
 import { Form } from 'react-bootstrap';
 import 'react-dates/initialize';
@@ -12,6 +11,7 @@ import Premium from './Premium';
 import Conclusion from './Conclusion';
 import Parent from './Parent';
 import { accountType, step } from './constant';
+import mockUser from './mockUser';
 
 const isUnder14 = dob => {
   if (!dob) return false;
@@ -20,10 +20,6 @@ const isUnder14 = dob => {
 };
 
 class App extends Component {
-  static props = {
-    user: PropTypes.object.isRequired
-  };
-
   state = {
     user: null,
     submitUser: null,
@@ -49,7 +45,7 @@ class App extends Component {
 
   componentWillMount() {
     this.setState({
-      user: this.props.user,
+      user: mockUser,
       submitUser: this.submitUser
     });
   }

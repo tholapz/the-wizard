@@ -5,8 +5,51 @@ import './Conclusion.css';
 
 const accountTypeMapper = ['Lite', 'Standard', 'Premium'];
 
+class Card extends React.Component {
+	render() {
+		const { number, name, expiry, cvc } = this.props;
+
+		return (
+			<Table striped bordered condensed hover responsive>
+			<tbody>
+				<tr>
+					<th scope="row" colSpan="2">Credit Card</th>
+				</tr>
+				<tr>
+					<td colSpan="2">{
+						''.concat(
+							number.slice(0, 4), ' ',
+							number.slice(4, 8), ' ',
+							number.slice(8, 12), ' ',
+							number.slice(12)
+						)
+					}</td>
+				</tr>
+				<tr>
+					<td colSpan="2">{name}</td>
+				</tr>
+				<tr>
+					<td>{''.concat(expiry.slice(0, 2),'/',expiry.slice(2))}</td>
+					<td>{cvc}</td>
+				</tr>
+			</tbody>
+			</Table>
+		);
+	}
+}
+
 const Conclusion = ({user}) => {
-	const { username, first, last, email, accountType, dob, country, parentEmail } = user;
+	const {
+		username,
+		first,
+		last,
+		email,
+		accountType,
+		dob,
+		country,
+		parentEmail,
+		card
+	} = user;
 
 	return (
 		<div>
@@ -46,6 +89,7 @@ const Conclusion = ({user}) => {
 					)}
 				</tbody>
 			</Table>
+			{ card && (<Card {...card}/>) }
 			{ parentEmail && <span>An email has been sent to {parentEmail}</span> }
 		</div>
 	);
