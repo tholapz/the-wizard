@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from "react";
 import { Form } from 'react-bootstrap';
+import 'react-dates/initialize';
 
 import './App.css';
 import { UserContext } from './UserContext';
@@ -20,7 +21,7 @@ class App extends Component {
   state = {
     user: null,
     submitUser: null,
-    step: step.HOME
+    step: step.STANDARD
   };
 
   submitUser = (newData) => {
