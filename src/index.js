@@ -5,6 +5,15 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import { accountType } from './constant';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const user = {
+	username: 'johndoe112',
+	first: 'John',
+	last: 'Doe',
+	email: 'johndoe112@mail.com',
+	accountType: accountType.LITE
+};
+
+ReactDOM.render(<App user={user} />, document.getElementById('root'));
 registerServiceWorker();
