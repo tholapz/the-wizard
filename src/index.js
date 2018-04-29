@@ -12,7 +12,7 @@ const user = {
 	first: 'John',
 	last: 'Doe',
 	email: 'johndoe112@mail.com',
-	accountType: accountType.LITE
+	accountType: accountType.STANDARD
 };
 
 ReactDOM.render(<App user={user} />, document.getElementById('root'));

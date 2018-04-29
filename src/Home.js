@@ -4,9 +4,10 @@ import { Checkbox, Button, ControlLabel } from 'react-bootstrap';
 
 import { UserContext } from './UserContext';
 import FieldGroup from './Components/FieldGroup';
-import { accountType } from './constant';
+import { accountType, step } from './constant';
 
 const emailAddressRegExp = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+const usernameRegExp = /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/;
 
 class Home extends Component {
   static props = {
@@ -15,8 +16,20 @@ class Home extends Component {
 
   state = this.props.user;
 
-  getValidationState = () => {
-    return emailAddressRegExp.test(this.state.email) ? 'success' : 'error';
+  getValidationState = field => {
+    switch (field) {
+      case 'email':
+        return emailAddressRegExp.test(this.state.email) ? 'success' : 'error'; 
+      case 'first':
+        return this.state.first.length > 0 ? 'success' : 'error';
+      case 'last':
+        return this.state.last.length > 0 ? 'success' : 'error';
+      case 'username':
+        return usernameRegExp.test(this.state.username) ? 'success' : 'error';
+      default:
+        console.error('unknown validation field', field);
+        break;
+    }
   };
 
   handleChange = field => e => {
@@ -34,9 +47,12 @@ class Home extends Component {
   }
 
   handleSubmit = () => {
-    if (this.getValidationState() === 'success') {
-      this.props.submitUser(this.state);
-    }
+    if (this.getValidationState('email') !== 'success') return;
+    if (this.getValidationState('first') !== 'success') return;
+    if (this.getValidationState('last') !== 'success') return;
+    if (this.getValidationState('username') !== 'success') return;
+    
+    this.props.submitUser(this.state, step.HOME);
   }
 
   render() {
@@ -48,6 +64,7 @@ class Home extends Component {
           label="Username"
           placeholder="Enter Username"
           value={this.state.username}
+          validationState={this.getValidationState('username')}
           onChange={this.handleChange('username')}
         />
         <FieldGroup
@@ -56,6 +73,7 @@ class Home extends Component {
           label="First Name"
           placeholder="Enter first name"
           value={this.state.first}
+          validationState={this.getValidationState('first')}
           onChange={this.handleChange('first')}
         />
         <FieldGroup
@@ -64,6 +82,7 @@ class Home extends Component {
           label="Last Name"
           placeholder="Enter last name"
           value={this.state.last}
+          validationState={this.getValidationState('last')}
           onChange={this.handleChange('last')}
         />
         <FieldGroup
@@ -72,7 +91,7 @@ class Home extends Component {
           label="Email address"
           placeholder="Enter email"
           value={this.state.email}
-          validationState={this.getValidationState()}
+          validationState={this.getValidationState('email')}
           onChange={this.handleChange('email')}
         />
         <ControlLabel>Account Type</ControlLabel>

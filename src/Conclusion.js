@@ -6,7 +6,8 @@ import './Conclusion.css';
 const accountTypeMapper = ['Lite', 'Standard', 'Premium'];
 
 const Conclusion = ({user}) => {
-	const { username, first, last, email, accountType } = user;
+	const { username, first, last, email, accountType, dob, country } = user;
+
 	return (
 		<Table striped bordered condensed hover responsive>
 			<tbody>
@@ -30,6 +31,18 @@ const Conclusion = ({user}) => {
 					<th scope="row">Account Type</th>
 					<td>{accountTypeMapper[accountType]}</td>
 				</tr>
+				{ dob && (
+					<tr>
+						<th scope="row">Date of Birth</th>
+						<td>{dob.format('L')}</td>
+					</tr>
+				)}
+				{ country && (
+					<tr>
+						<th scope="row">Country</th>
+						<td>{country}</td>
+					</tr>
+				)}
 			</tbody>
 		</Table>
 	);

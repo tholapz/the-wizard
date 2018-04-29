@@ -9,9 +9,7 @@ import Home from './Home';
 import Standard from './Standard';
 import Premium from './Premium';
 import Conclusion from './Conclusion';
-
-const step = { HOME: 0, STANDARD: 1, PREMIUM: 2, CONCLUSION: 3 };
-const stepMapper = [step.CONCLUSION, step.STANDARD, step.STANDARD];
+import { accountType, step } from './constant';
 
 class App extends Component {
   static props = {
@@ -21,13 +19,19 @@ class App extends Component {
   state = {
     user: null,
     submitUser: null,
-    step: step.STANDARD
+    step: step.HOME
   };
 
-  submitUser = (newData) => {
+  submitUser = (newData, fromStep) => {
+    let newStep = step.CONCLUSION;
+    if (fromStep === step.HOME && newData.accountType !== accountType.LITE) {
+      newStep = step.STANDARD;
+    } else if (fromStep === step.STANDARD && newData.accountType === accountType.PREMIUM) {
+      newStep = step.PREMIUM;
+    }
     this.setState({
       user: newData,
-      step: stepMapper[newData.accountType]
+      step: newStep
     });
   };
 
@@ -43,10 +47,10 @@ class App extends Component {
       <UserContext.Provider value={this.state}>
         <Form className="container app-container">
           <h1>The Wizard</h1>
+          <Conclusion/>
           { this.state.step === step.HOME && <Home/> }
           { this.state.step === step.STANDARD && <Standard/> }
           { this.state.step === step.PREMIUM && <Premium/> }
-          { this.state.step === step.CONCLUSION && <Conclusion/> }
         </Form>
       </UserContext.Provider>
     );
