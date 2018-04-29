@@ -31,6 +31,8 @@ class Standard extends Component {
   };
 
   handleSubmit = () => {
+    if (!this.getValidationState('country')) return;
+    if (!this.getValidationState('dob')) return;
     this.props.submitUser(this.state, step.STANDARD);
   };
 

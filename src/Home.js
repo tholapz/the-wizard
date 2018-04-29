@@ -14,7 +14,7 @@ class Home extends Component {
     user: PropTypes.object
   };
 
-  state = this.props.user;
+  state = Object.assign({}, this.props.user);
 
   getValidationState = field => {
     switch (field) {

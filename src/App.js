@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from "react";
 import { Form } from 'react-bootstrap';
 import 'react-dates/initialize';
+import moment from 'moment';
 
 import './App.css';
 import { UserContext } from './UserContext';
@@ -9,7 +10,14 @@ import Home from './Home';
 import Standard from './Standard';
 import Premium from './Premium';
 import Conclusion from './Conclusion';
+import Parent from './Parent';
 import { accountType, step } from './constant';
+
+const isUnder14 = dob => {
+  if (!dob) return false;
+  const age = moment().diff(dob, 'years');
+  return age < 14;
+};
 
 class App extends Component {
   static props = {
@@ -26,7 +34,11 @@ class App extends Component {
     let newStep = step.CONCLUSION;
     if (fromStep === step.HOME && newData.accountType !== accountType.LITE) {
       newStep = step.STANDARD;
+    } else if (fromStep === step.STANDARD && isUnder14(newData.dob)) {
+      newStep = step.PARENT;
     } else if (fromStep === step.STANDARD && newData.accountType === accountType.PREMIUM) {
+      newStep = step.PREMIUM;
+    } else if (fromStep === step.PARENT && newData.accountType === accountType.PREMIUM) {
       newStep = step.PREMIUM;
     }
     this.setState({
@@ -51,6 +63,7 @@ class App extends Component {
           { this.state.step === step.HOME && <Home/> }
           { this.state.step === step.STANDARD && <Standard/> }
           { this.state.step === step.PREMIUM && <Premium/> }
+          { this.state.step === step.PARENT && <Parent/> }
         </Form>
       </UserContext.Provider>
     );
