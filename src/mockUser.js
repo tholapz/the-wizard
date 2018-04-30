@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { accountType } from './constant';
 
 export default {
@@ -5,12 +6,14 @@ export default {
 	first: 'John',
 	last: 'Doe',
 	email: 'johndoe112@mail.com',
-	accountType: accountType.LITE,
-	// parentEmail: 'parent@mail.com',
+	accountType: accountType.PREMIUM,
+	dob: moment().subtract(20, 'years'),
+	country: 'Thailand',
+	parentEmail: 'parent@mail.com',
 	card: {
-		number: '4815820019901990',
-    name: 'Alan Kay',
-    expiry: '1222',
-    cvc: '111',
+		number: '4561430027004797',
+    name: 'Chloe Robinson',
+    expiry: '1118',
+    cvc: '654',
 	}
 };

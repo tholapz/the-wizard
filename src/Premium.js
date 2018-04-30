@@ -8,15 +8,11 @@ import { step } from './constant';
 import FieldGroup from './Components/FieldGroup';
 import 'react-credit-cards/es/styles-compiled.css';
 
-class Premium extends Component {
-  state = {
-    number: '',
-    name: '',
-    expiry: '',
-    cvc: '',
+export class Premium extends Component {
+  state = Object.assign({}, this.props.user.card, {
     focused: '',
     isValid: false
-  };
+  });
 
   componentDidMount() {
     Payment.formatCardNumber(document.querySelector('[name="number"]'));
@@ -73,6 +69,7 @@ class Premium extends Component {
           id="formControlsCardNumber"
           type="tel"
           name="number"
+          defaultValue={this.props.user.card.number}
           label="Card Number"
           placeholder="Card Number"
           validationState={this.state.isValid ? 'success' : 'error'}
@@ -84,6 +81,7 @@ class Premium extends Component {
           type="text"
           label="Card Holder's Name"
           name="name"
+          defaultValue={this.props.user.card.name}
           placeholder="Name"
           onKeyUp={this.handleInputChange}
           onFocus={this.handleInputFocus}
@@ -93,6 +91,7 @@ class Premium extends Component {
           	id="formControlsExpiry"
             type="tel"
             name="expiry"
+            defaultValue={this.props.user.card.expiry}
             label="Valid Thru"
             placeholder="Valid Thru"
             onKeyUp={this.handleInputChange}
@@ -102,6 +101,7 @@ class Premium extends Component {
           	id="formControlsCvc"
             type="tel"
             name="cvc"
+            defaultValue={this.props.user.card.cvc}
             label="CVC"
             placeholder="CVC"
             onKeyUp={this.handleInputChange}

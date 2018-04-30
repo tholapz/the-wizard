@@ -12,18 +12,14 @@ import './Standard.css';
 import { UserContext } from './UserContext';
 import { accountType, step } from './constant';
 
-class Standard extends Component {
+export class Standard extends Component {
   static props = {
     user: PropTypes.object
   };
 
   state = Object.assign(
     {},
-    this.props.user,
-    {
-      dob: moment().subtract(10, 'years'),
-      country: ''
-    }
+    this.props.user
   );
 
   handleChange = field => e => {
