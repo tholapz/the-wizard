@@ -7,6 +7,7 @@ import mockUser from './mockUser';
 it('should call submitUser() if all fields are good', () => {
 	const mockSubmitUser = jest.fn();
 	const wrapper = shallow(<Parent user={mockUser} submitUser={mockSubmitUser} />);
+	wrapper.setState({ parentEmail: 'test@mail.com' });
 	wrapper.find('.btn-primary').simulate('click');
 	expect(mockSubmitUser.mock.calls.length).toBe(1);
 });

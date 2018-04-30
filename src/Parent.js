@@ -39,7 +39,7 @@ export class Parent extends Component {
     return (
       <div>
         <FieldGroup
-          id="formControlsEmail"
+          id="formControlsParentEmail"
           type="email"
           label="Parent's Email address to send Consent"
           placeholder="Enter email"

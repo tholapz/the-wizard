@@ -18,7 +18,9 @@ export class Standard extends Component {
   };
 
   state = Object.assign(
-    {},
+    {
+      country: ''
+    },
     this.props.user
   );
 

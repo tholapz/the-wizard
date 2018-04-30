@@ -9,10 +9,15 @@ import FieldGroup from './Components/FieldGroup';
 import 'react-credit-cards/es/styles-compiled.css';
 
 export class Premium extends Component {
-  state = Object.assign({}, this.props.user.card, {
+  state = Object.assign({
     focused: '',
-    isValid: false
-  });
+    isValid: false,
+    name: '',
+    number: '',
+    expiry: '',
+    cvc: ''
+  }, this.props.user.card
+  );
 
   componentDidMount() {
     Payment.formatCardNumber(document.querySelector('[name="number"]'));
@@ -69,7 +74,7 @@ export class Premium extends Component {
           id="formControlsCardNumber"
           type="tel"
           name="number"
-          defaultValue={this.props.user.card.number}
+          defaultValue={this.props.user && this.props.user.card && this.props.user.card.number}
           label="Card Number"
           placeholder="Card Number"
           validationState={this.state.isValid ? 'success' : 'error'}
@@ -81,7 +86,7 @@ export class Premium extends Component {
           type="text"
           label="Card Holder's Name"
           name="name"
-          defaultValue={this.props.user.card.name}
+          defaultValue={this.props.user && this.props.user.card && this.props.user.card.name}
           placeholder="Name"
           onKeyUp={this.handleInputChange}
           onFocus={this.handleInputFocus}
@@ -91,7 +96,7 @@ export class Premium extends Component {
           	id="formControlsExpiry"
             type="tel"
             name="expiry"
-            defaultValue={this.props.user.card.expiry}
+            defaultValue={this.props.user && this.props.user.card && this.props.user.card.expiry}
             label="Valid Thru"
             placeholder="Valid Thru"
             onKeyUp={this.handleInputChange}
@@ -101,7 +106,7 @@ export class Premium extends Component {
           	id="formControlsCvc"
             type="tel"
             name="cvc"
-            defaultValue={this.props.user.card.cvc}
+            defaultValue={this.props.user && this.props.user.card && this.props.user.card.cvc}
             label="CVC"
             placeholder="CVC"
             onKeyUp={this.handleInputChange}
